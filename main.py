@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# @Date    : 2016/9/1
-# @Author  : hrwhisper
+# @Date    : 2020年01月08日20:51:25
+# @Author  : czx
 from __future__ import print_function
 import re
 import time
@@ -45,6 +45,7 @@ class UcasCourse(object):
             for i, line in enumerate(f):
                 if i < 2: continue
                 courses.append(line.strip().split())
+        print(courses)
         return courses
 
     def login_jwxk(self):
@@ -66,7 +67,8 @@ class UcasCourse(object):
     def get_course(self):
         # 获取课程开课学院的id，以及选课界面HTML
         html = self.jwxk_html
-        regular = r'<label for="id_([\S]+)">' + self.course[0][0][:2] + r'-'
+        # regular = r'<label for="id_([\S]+)">' + self.course[0][0][:2] + r'-'
+        regular = r'<label for="id_([\S]+)">' + self.course[0][2]
         institute_id = re.findall(regular, html)[0]
 
         url = 'http://jwxk.ucas.ac.cn' + \
