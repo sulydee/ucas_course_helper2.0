@@ -67,9 +67,11 @@ class UcasCourse(object):
     def get_course(self):
         # 获取课程开课学院的id，以及选课界面HTML
         html = self.jwxk_html
-        # regular = r'<label for="id_([\S]+)">' + self.course[0][0][:2] + r'-'
-        regular = r'<label for="id_([\S]+)">' + self.course[0][2]
-        institute_id = re.findall(regular, html)[0]
+        if not str.isdigit(self.course[0][2]):  # 第三个参数非数字的话，则为中文（如计算机学院）
+            regular = r'<label for="id_([\S]+)">' + self.course[0][2]
+            institute_id = re.findall(regular, html)[0]
+        else:   # 否则第三个参数为数字，如951→对应计算机学院的id
+            institute_id = self.course[0][2]
 
         url = 'http://jwxk.ucas.ac.cn' + \
               re.findall(r'<form id="regfrm2" name="regfrm2" action="([\S]+)" \S*class=', html)[0]
