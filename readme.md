@@ -1,6 +1,7 @@
 # 国科大选课助手说明 2.0 #
 ```
 copy from https://github.com/hrwhisper/ucas_course_helper，有一丢丢内部逻辑错误，已修改。
+2020年01月10日12:41:01，亲测千万不要太相信这个，选课还是手动的靠谱，慎用嗷。
 ```
 ## 使用方法 ##
 修改private.txt后，在控制台执行
