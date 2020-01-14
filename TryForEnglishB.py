@@ -1,5 +1,6 @@
+#警告：没有经过严格的测试，仅为英语B需要同时选两门课临时写的py，不建议使用。
 # -*- coding: utf-8 -*-
-# @Date    : 2020年01月08日20:51:25
+# @Date    : 2020年01月14日10:17:40
 # @Author  : czx
 from __future__ import print_function
 import re
@@ -40,7 +41,7 @@ class UcasCourse(object):
 
     @classmethod
     def _read_course_info(self):
-        with open("./private.txt") as f:
+        with open("./EnglishB.txt") as f:
             courses = []
             for i, line in enumerate(f):
                 if i < 2: continue
@@ -89,13 +90,14 @@ class UcasCourse(object):
         url = 'http://jwxk.ucas.ac.cn' + \
               re.findall(r'<form id="regfrm" name="regfrm" action="([\S]+)" \S*class=', html)[0]
         sid = re.findall(r'<span id="courseCode_([\S]+)">' + self.course[0][0] + '</span>', html)
-        if sid:
-            sid = sid[0]
-        else:
-            raise NotFoundCourseError
+        # if sid:
+        #     sid = sid[0]
+        # else:
+        #     raise NotFoundCourseError
+        # sid = ['547354877DEA82D9', 'AB3E8333CCBCB4EE']
         post_data = {'deptIds': institute_id, 'sids': sid}
-        if self.course[0][1] == '1':
-            post_data['did_' + sid] = sid
+        # if self.course[0][1] == '1':
+        #     post_data['did_' + sid] = sid
 
         html = self.session.post(url, data=post_data, headers=self.headers).text
         if html.find(u'选课成功') != -1:
@@ -121,8 +123,8 @@ class UcasCourse(object):
                     self.sleep()
             except NoLoginError:
                 self._init_session()
-            except NotFoundCourseError:
-                print('尝试选择课程编号为 {} 的时候出错，可能编号错误或者已被选上'.format(self.course.pop(0)[0]))
+            # except NotFoundCourseError:
+            #     print('尝试选择课程编号为 {} 的时候出错，可能编号错误或者已被选上'.format(self.course.pop(0)[0]))
             except NotSelectCourseTime:
                 print('选课时间未到')
                 self.sleep(20)
